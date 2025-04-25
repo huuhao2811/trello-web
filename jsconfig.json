@@ -1,0 +1,7 @@
+{
+    "compilerOptions": {
+        "paths": {
+            "~/*": ["./src/*"]   // co the su dung crtl + click de di den file
+        },
+    }
+}
