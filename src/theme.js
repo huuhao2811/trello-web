@@ -4,7 +4,10 @@ import { experimental_extendTheme as extendTheme} from '@mui/material/styles'
 const APP_BAR_HEIGHT = '58px'
 const BOARD_BAR_HEIGHT = '60px'
 const BOARD_CONTENT_HEIGHT = `calc(100vh - ${APP_BAR_HEIGHT} - ${BOARD_BAR_HEIGHT})`
-
+const beige = {
+  main: '#F5F5DC',
+  contrastText: '#000000' // Màu chữ đi kèm trên nền be
+}
 const theme = extendTheme({
   trello: {
     appBarHeight: APP_BAR_HEIGHT,
@@ -15,7 +18,7 @@ const theme = extendTheme({
     light: {
       palette: {
         primary: blue,
-        secondary: teal
+        secondary: beige
       }
     },
     dark: {
@@ -26,23 +29,6 @@ const theme = extendTheme({
     }
   },
   components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        'body, html': {
-          '*::-webkit-scrollbar': {
-            height: '8px',
-            width: '8px'
-          },
-          '*::-webkit-scrollbar-thumb': {
-            backgroundColor: '#FFCC33',
-            borderRadius: '8px'
-          },
-          '*::-webkit-scrollbar-thumb:hover': {
-            backgroundColor: '#FFA000'
-          }
-        }
-      }
-    }, // not complete scrollbar
     MuiButton: {
       styleOverrides: {
         root: ({ theme }) => ({
@@ -63,6 +49,13 @@ const theme = extendTheme({
         root: ({ theme }) => ({
           color : theme.palette.primary[900],
           fontSize: '0.875rem'
+        })
+      }
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          '&.MuiTypography-body1': { fontSize: '0.875rem', color: theme.palette.secondary.main }
         })
       }
     },

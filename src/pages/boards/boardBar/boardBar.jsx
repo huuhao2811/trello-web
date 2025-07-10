@@ -9,26 +9,27 @@ import Avatar from '@mui/material/Avatar'
 import AvatarGroup from '@mui/material/AvatarGroup'
 import { Tooltip } from '@mui/material'
 import Button from '@mui/material/Button'
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import PersonAddIcon from '@mui/icons-material/PersonAdd'
+import { capitalizeFirstLetter } from '~/utils/formatters'
 const MENU_STYLE = {
   color: (theme) => theme.palette.primary[900],
-  backgroundColor: '#F5F5DC',
+  backgroundColor: (theme => theme.palette.secondary.main),
   border : 'none',
   borderRadius: '4px',
   paddingX: '5px',
   '& .MuiSvgIcon-root': {
-    color: (theme) => theme.palette.primary[900],
+    color: (theme) => theme.palette.primary[900]
   },
   '&:hover': {
-    backgroundColor: '#F5F5DC'
+    backgroundColor: (theme => theme.palette.secondary.main)
   }
 }
-function BoardBar() {
+function BoardBar({ board }) {
   return (
     <Box 
       sx={{
         width: '100%',
-        backgroundColor: '#F5F5DC',
+        backgroundColor: (theme => theme.palette.secondary.main),
         height: (theme) => theme.trello.appBarHeight,
         display: 'flex',
         alignItems: 'center',
@@ -41,13 +42,13 @@ function BoardBar() {
       <Box sx = {{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <Chip sx = { MENU_STYLE }
           icon={<DashboardIcon />}
-          label="Huuhao2811 FullStack"
+          label={board?.title}
           clickable
         //onClick = {() => {}}
         />
         <Chip sx = { MENU_STYLE }
           icon={<VpnLockIcon />}
-          label="Public/Private Workspace"
+          label={capitalizeFirstLetter(board?.type)}
           clickable
         //onClick = {() => {}}
         />

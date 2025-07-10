@@ -1,4 +1,4 @@
-import ModeSelect from '~/components/ModeSelect/index.jsx'
+import ModeSelect from '~/components/ModeSelect/ModeSelect.jsx'
 import Box from '@mui/material/Box'
 import AppsIcon from '@mui/icons-material/Apps'
 import { ReactComponent as TrelloLogo } from '~/assets/trello.svg'
@@ -14,13 +14,13 @@ import Badge from '@mui/material/Badge'
 import Tooltip from '@mui/material/Tooltip'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import Profiles from './Menus/profiles'
-import AddBoxIcon from '@mui/icons-material/AddBox';
+import AddBoxIcon from '@mui/icons-material/AddBox'
 function AppBar() {
   return (
     <Box
       sx={{
         width: '100%',
-        backgroundColor: '#F5F5DC',
+        backgroundColor: (theme => theme.palette.secondary.main),
         height: (theme) => theme.trello.appBarHeight,
         display: 'flex',
         alignItems: 'center',

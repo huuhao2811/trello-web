@@ -43,40 +43,44 @@ function Workspaces() {
         MenuListProps={{
           'aria-labelledby': 'basic-button-workspaces'
         }}
+        PaperProps={{
+          sx: {
+            backgroundColor: (theme) => theme.palette.secondary.main // Hoặc bất kỳ màu nào
+          }
+        }}
       >
-        <MenuItem>
+        <MenuItem >
           <ListItemIcon>
-            <ContentCut fontSize="small" />
+            <ContentCut fontSize="small" color = "primary" />
           </ListItemIcon>
-          <ListItemText>Cut</ListItemText>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            ⌘X
+          <Typography variant="body2" sx = {{ color: (theme) => theme.palette.primary[900] }}>
+            Cut  ⌘X
           </Typography>
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <ContentCopy fontSize="small" />
+            <ContentCopy fontSize="small" color = "primary" />
           </ListItemIcon>
-          <ListItemText>Copy</ListItemText>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            ⌘C
+          <Typography variant="body2" sx = {{ color: (theme) => theme.palette.primary[900] }}>
+          Copy  ⌘C
           </Typography>
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <ContentPaste fontSize="small" />
+            <ContentPaste fontSize="small" color = "primary" />
           </ListItemIcon>
-          <ListItemText>Paste</ListItemText>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            ⌘V
+          <Typography variant="body2" sx = {{ color: (theme) => theme.palette.primary[900] }}>
+          Paste  ⌘V
           </Typography>
         </MenuItem>
         <Divider />
         <MenuItem>
           <ListItemIcon>
-            <Cloud fontSize="small" />
+            <Cloud fontSize="small" color = "primary" />
           </ListItemIcon>
-          <ListItemText>Web Clipboard</ListItemText>
+          <Typography variant="body2" sx = {{ color: (theme) => theme.palette.primary[900] }}>
+          Web Clipboard
+          </Typography>
         </MenuItem>
       </Menu>
     </Box>

@@ -8,7 +8,7 @@ import ListItemText from '@mui/material/ListItemText'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import Check from '@mui/icons-material/Check'
-
+import Typography from '@mui/material/Typography'
 function Recent() {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
@@ -39,32 +39,51 @@ function Recent() {
         MenuListProps={{
           'aria-labelledby': 'basic-button-recent'
         }}
+        PaperProps={{
+          sx: {
+            backgroundColor: (theme) => theme.palette.secondary.main // Hoặc bất kỳ màu nào
+          }
+        }}
       >
         <MenuItem>
-          <ListItemText inset>Single</ListItemText>
+          <Typography variant="body2" sx = {{ color: (theme) => theme.palette.primary[900] }}>
+              Single
+          </Typography>
         </MenuItem>
         <MenuItem>
-          <ListItemText inset>1.15</ListItemText>
+          <Typography variant="body2" sx = {{ color: (theme) => theme.palette.primary[900] }}>
+            1.15
+          </Typography>
         </MenuItem>
         <MenuItem>
-          <ListItemText inset>Double</ListItemText>
+          <Typography variant="body2" sx = {{ color: (theme) => theme.palette.primary[900] }}>
+              Double
+          </Typography>
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <Check />
+            <Check sx = {{ color: (theme) => theme.palette.primary[900] }}/>
           </ListItemIcon>
-          Custom: 1.2
+          <Typography variant="body2" sx = {{ color: (theme) => theme.palette.primary[900] }}>
+            Custom: 1.2
+          </Typography>
         </MenuItem>
         <Divider />
         <MenuItem>
-          <ListItemText>Add space before paragraph</ListItemText>
+          <Typography variant="body2" sx = {{ color: (theme) => theme.palette.primary[900] }}>
+          Add space before paragraph
+          </Typography>
         </MenuItem>
         <MenuItem>
-          <ListItemText>Add space after paragraph</ListItemText>
+          <Typography variant="body2" sx = {{ color: (theme) => theme.palette.primary[900] }}>
+          Add space after paragraph
+          </Typography>
         </MenuItem>
         <Divider />
         <MenuItem>
-          <ListItemText>Custom spacing...</ListItemText>
+          <Typography variant="body2" sx = {{ color: (theme) => theme.palette.primary[900] }}>
+          Custom spacing...
+          </Typography>
         </MenuItem>
       </Menu>
     </Box>
