@@ -10,7 +10,7 @@ export const mockData = {
     type: 'public', // 'private'
     ownerIds: [],
     memberIds: [],
-    columnOrderIds: ['column-id-01', 'column-id-02', 'column-id-03'],
+    columnOrderIds: ['column-id-01', 'column-id-02', 'column-id-03', 'column-id-04'],
     columns: [
       {
         _id: 'column-id-01',
@@ -188,6 +188,20 @@ export const mockData = {
             memberIds: [],
             comments: [],
             attachments: []
+          }
+        ]
+      },
+      {
+        _id: 'column-id-04',
+        boardId: 'board-id-01',
+        title: 'Done Column 04',
+        cardOrderIds: ['column-id-04-placeholder-card'],
+        cards: [
+          {
+            _id: 'column-id-04-placeholder-card',
+            boardId: 'board-id-01',
+            columnId: 'column-id-04',
+            FE_Placeholder: true
           }
         ]
       }
