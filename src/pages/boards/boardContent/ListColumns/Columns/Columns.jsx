@@ -20,10 +20,14 @@ import ListCards from './ListCards/ListCards.jsx'
 import { mapOrder } from '~/utils/sort'
 import {useSortable} from '@dnd-kit/sortable'
 import {CSS} from '@dnd-kit/utilities'
+import TextField from '@mui/material/TextField'
+import { useState } from 'react'
+import CloseIcon from '@mui/icons-material/Close'
+import { useConfirm } from 'material-ui-confirm'
 const COLUMN_HEADER_HEIGHT = '50px'
 const COLUMN_FOOTER_HEIGHT = '56px'
 
-function Columns({column}) {
+function Columns({column, createNewCard, deleteColumnDetails }) {
   const {
     attributes,
     listeners,
@@ -48,13 +52,43 @@ function Columns({column}) {
   const handleClose = () => {
     setAnchorEl(null)
   }
-  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
+  const orderedCards = column.cards
+  const [openNewCardForm, setOpenNewCardForm] = useState(false)
+  const toggleOpenNewCardForm = () => setOpenNewCardForm(!openNewCardForm)
+  const [newCardTitle, setNewCardTitle] = useState('')
+  const addNewCard = async () => {
+    if (!newCardTitle) {
+      return
+    }
+    const newCardData = {
+      title: newCardTitle,
+      columnId: column._id
+    }
+    await createNewCard(newCardData)
+    toggleOpenNewCardForm()
+    setNewCardTitle('')
+  }
+  const confirmDeleteColumn = useConfirm()
+  const handleDeleteColumn = () => {
+    confirmDeleteColumn({
+      title: 'Delete Column',
+      description: 'Are you sure you want to delete this column?',
+      confirmationText: 'Confirm',
+      cancellationText: 'Cancel',
+      // dialogProps: { maxWidth: 'xs' },
+      // confirmationButtonProps: { color: 'secondary', variant: 'outlined' },
+      // cancellationButtonProps: { color: 'inherit' },
+      // allowClose: false
+
+    }).then(()=> {
+      deleteColumnDetails(column._id)
+    }).catch(() => {})
+  }
   return (
     <div
       ref = {setNodeRef}
       style = {dndKitColumnStyles}
       {...attributes}
-      
     >
       <Box
         {...listeners}
@@ -108,46 +142,76 @@ function Columns({column}) {
               anchorEl={anchorEl}
               open={open}
               onClose={handleClose}
+              onClick ={handleClose}
               MenuListProps={{
-                'aria-labelledby': 'basic-button-workspaces'
+                'aria-labelledby': 'basic-button-starred'
+              }}
+              PaperProps={{
+                sx: {
+                  backgroundColor: (theme) => theme.palette.secondary.main ,// Hoặc bất kỳ màu nào
+                }
               }}
             >
-              <MenuItem>
+              <MenuItem
+                onClick = {toggleOpenNewCardForm}
+                sx={{
+                  '&:hover .menu-icon, &:hover .menu-text': {
+                    color: 'success.light'
+                  }
+                }}
+              >
                 <ListItemIcon>
-                  <AddCardIcon fontSize="small" />
+                  <AddCardIcon className="menu-icon" sx={{ color: (theme) => theme.palette.primary[900] }} fontSize="small" />
                 </ListItemIcon>
-                <ListItemText>Add new card</ListItemText>
+                <Typography
+                  variant="span"
+                  className="menu-text"
+                  sx={{ fontSize: '0.9rem', color: (theme) => theme.palette.primary[900] }}
+                >
+                  Add new card
+                </Typography>
               </MenuItem>
               <MenuItem>
                 <ListItemIcon>
-                  <ContentCut fontSize="small" />
+                  <ContentCut sx = {{ color: (theme) => theme.palette.primary[900] }} fontSize="small" />
                 </ListItemIcon>
-                <ListItemText>Cut</ListItemText>
+                <Typography variant='span' sx = {{ fontSize: '0.9rem', color: (theme) => theme.palette.primary[900]}}>Cut</Typography>
               </MenuItem>
               <MenuItem>
                 <ListItemIcon>
-                  <ContentCopy fontSize="small" />
+                  <ContentCopy sx = {{ color: (theme) => theme.palette.primary[900] }} fontSize="small" />
                 </ListItemIcon>
-                <ListItemText>Copy</ListItemText>
+                <Typography variant='span' sx = {{ fontSize: '0.9rem', color: (theme) => theme.palette.primary[900]}}>Copy</Typography>
               </MenuItem>
               <MenuItem>
                 <ListItemIcon>
-                  <ContentPaste fontSize="small" />
+                  <ContentPaste sx = {{ color: (theme) => theme.palette.primary[900] }} fontSize="small" />
                 </ListItemIcon>
-                <ListItemText>Paste</ListItemText>
+                <Typography variant='span' sx = {{ fontSize: '0.9rem', color: (theme) => theme.palette.primary[900]}}>Paste</Typography>
               </MenuItem>
               <Divider />
-              <MenuItem>
+              <MenuItem
+                onClick = {handleDeleteColumn}
+                sx={{
+                  '&:hover': {
+                    '& .menu-icon, & .menu-text': {
+                      color: 'warning.dark'
+                    }
+                  }
+                }}
+              >
                 <ListItemIcon>
-                  <CancelIcon fontSize="small" />
+                  <CancelIcon className="menu-icon" sx={{ color: (theme) => theme.palette.primary[900] }} fontSize="small" />
                 </ListItemIcon>
-                <ListItemText>Remove this column</ListItemText>
+                <Typography className="menu-text" variant="span" sx={{ fontSize: '0.9rem', color: (theme) => theme.palette.primary[900] }}>
+                  Delete this column
+                </Typography>
               </MenuItem>
               <MenuItem>
                 <ListItemIcon>
-                  <Cloud fontSize="small" />
+                  <Cloud sx = {{ color: (theme) => theme.palette.primary[900] }} fontSize="small" />
                 </ListItemIcon>
-                <ListItemText>Archive this column</ListItemText>
+                <Typography variant='span' sx = {{ fontSize: '0.9rem', color: (theme) => theme.palette.primary[900]}}>Archive this column</Typography>
               </MenuItem>
             </Menu>
           </Box>
@@ -160,23 +224,84 @@ function Columns({column}) {
         <Box
           sx={{
             height: COLUMN_FOOTER_HEIGHT,
-            p: 2,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between'
+            p: 2
           }}
         >
-          <Button
-            startIcon={<AddCardIcon />}
-            sx={{ color: (theme) => theme.palette.secondary.main }}
-          >
-            Add new card
-          </Button>
-          <Tooltip title="Drag to move">
-            <DragHandleIcon
-              sx={{ color: (theme) => theme.palette.secondary.main, cursor: 'pointer' }}
-            />
-          </Tooltip>
+          {
+            !openNewCardForm
+              ?
+              <Box
+                sx={{ 
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between'
+                }}>
+                <Button
+                  startIcon={<AddCardIcon />}
+                  sx={{ color: (theme) => theme.palette.secondary.main }}
+                  onClick = {toggleOpenNewCardForm}
+                >
+                  Add new card
+                </Button>
+                <Tooltip title="Drag to move">
+                  <DragHandleIcon
+                    sx={{ color: (theme) => theme.palette.secondary.main, cursor: 'pointer' }}
+                  />
+                </Tooltip>
+              </Box>
+              :
+              <Box sx={{
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1
+              }}
+              >
+                <TextField
+                  label = "Enter card title..."
+                  type = "text"
+                  size = "small"
+                  variant = "outlined"
+                  autoFocus
+                  data-no-dnd="true"
+                  value = {newCardTitle}
+                  onChange={(e) => setNewCardTitle(e.target.value) }
+                  sx = {{
+                    '& label': { color: (theme) => theme.palette.secondary.main },
+                    '& input': { color: (theme) => theme.palette.secondary.main },
+                    '& label.Mui-focused': { color: (theme) => theme.palette.secondary.main },
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': { borderColor: (theme) => theme.palette.secondary.main },
+                      '&:hover fieldset': { borderColor: (theme) => theme.palette.secondary.main },
+                      '&.Mui-focused fieldset': { borderColor: (theme) => theme.palette.secondary.main }
+                    }
+                  }}
+                />
+                <Box sx ={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Button
+                    onClick = { addNewCard }
+                    variant = "contained" color = "success" size = "small"
+                    data-no-dnd="true"
+                    sx = {{
+                      boxShadow: 'none',
+                      border: '0.5px solid',
+                      borderColor: (theme) => theme.palette.secondary.main,
+                      '&hover': { bgcolor: (theme) => theme.palette.secondary.main }
+                    }}
+                  >Add</Button>
+                  <CloseIcon
+                    fontsize="small"
+                    sx = {{
+                      color: (theme) => theme.palette.secondary.main,
+                      cursor: 'pointer',
+                      '&:hover': { color: (theme) => theme.palette.primary[100] }
+                    }}
+                    onClick={toggleOpenNewCardForm}
+                  />
+                </Box>
+              </Box>
+          }
         </Box>
       </Box>
     </div>

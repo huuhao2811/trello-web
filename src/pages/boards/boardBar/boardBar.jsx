@@ -40,12 +40,14 @@ function BoardBar({ board }) {
         borderTop: '2px solid #0000FF'
       }}>
       <Box sx = {{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <Chip sx = { MENU_STYLE }
-          icon={<DashboardIcon />}
-          label={board?.title}
-          clickable
-        //onClick = {() => {}}
-        />
+        <Tooltip title = {board?.description}>
+          <Chip sx = { MENU_STYLE }
+            icon={<DashboardIcon />}
+            label={board?.title}
+            clickable
+          //onClick = {() => {}}
+          />
+        </Tooltip>
         <Chip sx = { MENU_STYLE }
           icon={<VpnLockIcon />}
           label={capitalizeFirstLetter(board?.type)}

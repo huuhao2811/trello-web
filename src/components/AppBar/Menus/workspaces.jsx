@@ -51,7 +51,7 @@ function Workspaces() {
       >
         <MenuItem >
           <ListItemIcon>
-            <ContentCut fontSize="small" color = "primary" />
+            <ContentCut fontSize="small" sx = {{ color: (theme) => theme.palette.primary[900] }} />
           </ListItemIcon>
           <Typography variant="body2" sx = {{ color: (theme) => theme.palette.primary[900] }}>
             Cut  ⌘X
@@ -59,7 +59,7 @@ function Workspaces() {
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <ContentCopy fontSize="small" color = "primary" />
+            <ContentCopy fontSize="small" sx = {{ color: (theme) => theme.palette.primary[900] }} />
           </ListItemIcon>
           <Typography variant="body2" sx = {{ color: (theme) => theme.palette.primary[900] }}>
           Copy  ⌘C
@@ -67,7 +67,7 @@ function Workspaces() {
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <ContentPaste fontSize="small" color = "primary" />
+            <ContentPaste fontSize="small" sx = {{ color: (theme) => theme.palette.primary[900] }} />
           </ListItemIcon>
           <Typography variant="body2" sx = {{ color: (theme) => theme.palette.primary[900] }}>
           Paste  ⌘V
@@ -76,7 +76,7 @@ function Workspaces() {
         <Divider />
         <MenuItem>
           <ListItemIcon>
-            <Cloud fontSize="small" color = "primary" />
+            <Cloud fontSize="small" sx = {{ color: (theme) => theme.palette.primary[900] }} />
           </ListItemIcon>
           <Typography variant="body2" sx = {{ color: (theme) => theme.palette.primary[900] }}>
           Web Clipboard

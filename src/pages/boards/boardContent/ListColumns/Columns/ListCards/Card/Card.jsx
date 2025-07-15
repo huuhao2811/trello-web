@@ -9,7 +9,7 @@ import CommentIcon from '@mui/icons-material/Comment'
 import AttachmentIcon from '@mui/icons-material/Attachment'
 import {useSortable} from '@dnd-kit/sortable'
 import {CSS} from '@dnd-kit/utilities'
-function Card({card}) {
+function Card( { card } ) {
   const {
     attributes,
     listeners,
@@ -37,7 +37,9 @@ function Card({card}) {
         color: (theme) => theme.palette.secondary.main,
         backgroundColor: (theme) => theme.palette.primary[700],
         overflow: 'unset',
-        minHeight: 10 // hoặc 40-60 tùy bạn
+        minHeight: 10,
+        border: '1px solid transparent',
+        '&:hover': { borderColor:  (theme) => theme.palette.secondary.main }
       }}
     >
       {!card?.FE_Placeholder && (
@@ -78,9 +80,6 @@ function Card({card}) {
         </>
       )}
     </MuiCard>
-  
-
-
   )
 }
 
