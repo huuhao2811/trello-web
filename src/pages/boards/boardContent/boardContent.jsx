@@ -13,7 +13,7 @@ const ACTIVE_DRAG_ITEM_TYPE = {
   COLUMN: 'ACTIVE_DRAG_ITEM_TYPE_COLUMN',
   CARD: 'ACTIVE_DRAG_ITEM_TYPE_CARD'
 }
-import {MouseSensor, TouchSensor} from '../../../customLibraries/DnDKitSensor'
+import {MouseSensor, TouchSensor} from '~/customLibraries/DndKitSensor'
 import { generatePlaceholderCard } from '~/utils/formatters'
 function BoardContent({ board, createNewColumn, createNewCard, moveColumns, moveCardInTheSameColumn, moveCardToDifferentColumn, deleteColumnDetails }) {
   const mouseSensor = useSensor(MouseSensor, { activationConstraint: { distance: 10 } })
